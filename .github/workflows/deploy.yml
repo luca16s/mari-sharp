@@ -1,4 +1,4 @@
-name: MariSharp
+name: Deploy
 on:
   push:
     tags:
