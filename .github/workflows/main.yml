@@ -1,0 +1,29 @@
+name: MariSharp
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Realizando checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Preparando .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Restaurando pacotes
+      run: dotnet restore
+    - name: Construindo projetos
+      run: dotnet build -c Release --no-restore
+    - name: Buscando versão e publicando pacote
+      run: |
+        $tagArray="${{github.ref}}".Split("/")
+        $tag=$tagArray[2].Split("v")
+        $VERSION=$tag[1]
+        dotnet pack -p:PackageVersion=$VERSION --configuration Release --property:PackageOutputPath=..\
+        dotnet nuget push "*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/luca16s/index.json" --skip-duplicate
