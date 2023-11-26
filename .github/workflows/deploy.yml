@@ -25,5 +25,4 @@ jobs:
         $tag=$tagArray[2].Split("v")
         $VERSION=$tag[1]
         dotnet pack -p:PackageID=ISO.MariSharp -p:PackageVersion=$VERSION --configuration Release --property:PackageOutputPath=..\
-        dotnet nuget push "*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/luca16s/index.json" --skip-duplicate
-      working-directory: ./ISO.AI.Maritalk
+        dotnet nuget push "*.nupkg" --api-key ${{ secrets.TOKEN }} --source "https://nuget.pkg.github.com/luca16s/index.json" --skip-duplicate
