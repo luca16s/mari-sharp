@@ -24,6 +24,6 @@ jobs:
         $tagArray="${{github.ref}}".Split("/")
         $tag=$tagArray[2].Split("v")
         $VERSION=$tag[1]
-        dotnet pack -p:PackageVersion=$VERSION --configuration Release --property:PackageOutputPath=..\
-        dotnet nuget add source --username luca16s --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/luca16s/index.json"
-        dotnet nuget push "*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/luca16s/index.json" --skip-duplicate
+        dotnet pack -p:PackageID=ISO.MariSharp -p:PackageVersion=$VERSION --configuration Release --property:PackageOutputPath=..\
+        dotnet nuget add source --username luca16s --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/luca16s/index.json"
+        dotnet nuget push "*.nupkg" --api-key ${{ secrets.TOKEN }} --source "https://nuget.pkg.github.com/luca16s/index.json" --skip-duplicate
