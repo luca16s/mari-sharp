@@ -20,9 +20,11 @@ jobs:
     - name: Construindo projetos
       run: dotnet build -c Release --no-restore
     - name: Buscando versão e publicando pacote
+      env:
+        SECRET: ${{ secrets.TOKEN }}
       run: |
         $tagArray="${{github.ref}}".Split("/")
         $tag=$tagArray[2].Split("v")
         $VERSION=$tag[1]
         dotnet pack -p:PackageVersion=$VERSION --configuration Release --property:PackageOutputPath=..\
-        dotnet nuget push "*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/luca16s/index.json" --skip-duplicate
+        dotnet nuget push "*.nupkg" --api-key "$env:SUPER_SECRET" --source "https://nuget.pkg.github.com/luca16s/index.json" --skip-duplicate
